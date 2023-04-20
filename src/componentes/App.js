@@ -1,10 +1,11 @@
 import './App.css';
 import React from 'react';
-
 import Home from './Home';
 import Carrito from './Carrito';
 import NavbarLibros from './NavBarLibros';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -45,7 +46,7 @@ class App extends React.Component {
           <NavbarLibros carrito={this.state.carrito.length} />
           <Routes>
             <Route path="/" exact element={<Home productos={this.state.productos} manejador={(p) => this.manejador(p)} />}></Route>
-            <Route path="/carrito" element={<Carrito cart={this.state.carrito} />}></Route>
+            <Route path="/carrito" element={<Carrito cart={this.state.carrito} eliminarProducto={(p)=>this.eliminarProducto(p)} />}></Route>
           </Routes>
         </div>
       </Router>
@@ -60,6 +61,13 @@ class App extends React.Component {
     }
 
   }
+
+  eliminarProducto(p){
+    const nuevoCarrito = [...this.state.carrito];
+    const filtrado=nuevoCarrito.filter(prod=>prod!==p);
+    this.setState({'carrito':filtrado});
+  }
 }
+
 
 export default App;
